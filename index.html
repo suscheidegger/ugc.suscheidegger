@@ -304,7 +304,8 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .depoimento cite span{display:block;font-weight:300;color:var(--tinta-suave);font-size:.92rem}
 .autor{display:flex;align-items:center;gap:12px}
 .capa-rodape{display:flex;flex-wrap:wrap;align-items:center;gap:22px 36px}
-.fala-capa{margin:0;flex:1 1 260px;max-width:340px;background:var(--papel);border-radius:16px;padding:16px 18px;box-shadow:var(--sombra);transform:rotate(-1deg)}
+.fala-capa{margin:0;flex:1 1 100%;max-width:560px;background:var(--papel);border-radius:var(--raio);padding:18px 22px;box-shadow:var(--sombra)}
+.fala-capa blockquote::before{content:"“";display:block;font-size:2.6rem;line-height:.6;color:var(--terra);margin-bottom:.15rem}
 .fala-capa blockquote{margin:0 0 10px;font-family:var(--serif);font-size:1.05rem;line-height:1.35;color:var(--tinta)}
 .fala-capa cite{font-style:normal;font-weight:500;font-size:.92rem}
 .fala-capa .logo-dep{width:38px;height:38px;padding:5px}
@@ -462,8 +463,8 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
         <ul class="mini-numeros" id="numerosCapa"></ul>
         <!-- fala de cliente na capa: troque o texto e o nome aqui -->
         <figure class="fala-capa">
-          <blockquote>“Esse gelo rosa dá um tchammm no vídeo... detalhes que fazem diferença ✨”</blockquote>
-          <figcaption class="autor"><span class="logo-dep"><img src="logos/leev.jpg" alt="" loading="lazy"></span><cite>Leev</cite></figcaption>
+          <blockquote>Esse gelo rosa dá um tchammm no vídeo... detalhes que fazem diferença ✨</blockquote>
+          <figcaption class="autor"><span class="logo-dep"><img src="logos/leev.png" alt="" loading="lazy"></span><cite>Leev</cite></figcaption>
         </figure>
       </div>
     </div>
@@ -827,7 +828,7 @@ const depoimentos = [
   { texto: "A qualidade da imagem, o tom de voz e a naturalidade ficaram exatamente como planejamos, superando nossas expectativas iniciais.", nome: "Open English", empresa: "", logo: "logos/open-english.png" },
   { texto: "Oie, o conteúdo ficou ótimo 💜💜💜", nome: "Mercado Livre", empresa: "", logo: "logos/mercado-livre.png" },
   { texto: "Arrasou muito no conteúdo! Muito obrigada pela confiança e por compartilhar sua experiência com a gente, Su! Ansiosa para ver o que mais vem por aí.", nome: "Skence", empresa: "", logo: "logos/skence.jpg", cobrir: true },
-  { texto: "Ameiii o conteúdo! Ficou sensacional. Adorei a edição também.", nome: "Leev", empresa: "", logo: "logos/leev.jpg" }
+  { texto: "Ameiii o conteúdo! Ficou sensacional. Adorei a edição também.", nome: "Leev", empresa: "", logo: "logos/leev.png" }
 ];
 
 /* =====================================================================
