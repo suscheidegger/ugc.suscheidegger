@@ -303,6 +303,11 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .depoimento cite{font-style:normal;font-weight:500}
 .depoimento cite span{display:block;font-weight:300;color:var(--tinta-suave);font-size:.92rem}
 .autor{display:flex;align-items:center;gap:12px}
+.capa-rodape{display:flex;flex-wrap:wrap;align-items:center;gap:22px 36px}
+.fala-capa{margin:0;flex:1 1 260px;max-width:340px;background:var(--papel);border-radius:16px;padding:16px 18px;box-shadow:var(--sombra);transform:rotate(-1deg)}
+.fala-capa blockquote{margin:0 0 10px;font-family:var(--serif);font-size:1.05rem;line-height:1.35;color:var(--tinta)}
+.fala-capa cite{font-style:normal;font-weight:500;font-size:.92rem}
+.fala-capa .logo-dep{width:38px;height:38px;padding:5px}
 .logo-dep{flex:none;width:46px;height:46px;border-radius:50%;background:#fff;border:1px solid rgba(58,42,31,.1);display:grid;place-items:center;overflow:hidden;padding:7px}
 .logo-dep img{max-width:100%;max-height:100%;object-fit:contain}
 .logo-dep.cobrir{padding:0}
@@ -453,7 +458,14 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
         <a class="btn btn-linha" href="#destaques">Ver os trabalhos</a>
       </div>
       <!-- Os três números da capa são preenchidos pelo array "numerosCapa" no script -->
-      <ul class="mini-numeros" id="numerosCapa"></ul>
+      <div class="capa-rodape">
+        <ul class="mini-numeros" id="numerosCapa"></ul>
+        <!-- fala de cliente na capa: troque o texto e o nome aqui -->
+        <figure class="fala-capa">
+          <blockquote>“Esse gelo rosa dá um tchammm no vídeo... detalhes que fazem diferença ✨”</blockquote>
+          <figcaption class="autor"><span class="logo-dep"><img src="logos/leev.jpg" alt="" loading="lazy"></span><cite>Leev</cite></figcaption>
+        </figure>
+      </div>
     </div>
     <div class="capa-foto revelar">
       <figure class="foto-recorte" style="margin:0 auto">
@@ -721,13 +733,13 @@ const nichos = [
 /* Trabalhos da galeria. Só aparecem os botões de nicho que tiverem pelo menos um trabalho.
    capa: imagem 4:5 na pasta "fotos". link: vídeo no YouTube, TikTok ou Instagram (toca dentro do portfólio). */
 const trabalhos = [
+  { nicho: "beleza",  titulo: "Queda capilar após uso de canetas emagrecedoras", marca: "Vichy", detalhe: "Storytelling: emagrecimento com canetas e queda capilar", formato: "vídeo UGC 9:16", capa: "fotos/vichy-queda-1.jpg", link: "https://youtube.com/shorts/CW-AYMA9fko", cor: "g1", selo: "🔥 +5M visualizações" },
   { nicho: "fitness", titulo: "App de Treino",    marca: "Befit",  formato: "vídeo UGC 9:16", capa: "fotos/befit-app-treino.jpg", link: "https://youtube.com/shorts/i7gsoW5zoXQ", cor: "g2" },
   { nicho: "tech",    titulo: "App de Cashback",  marca: "Méliuz", formato: "vídeo UGC 9:16", capa: "fotos/meliuz-cashback.jpg",  link: "https://youtube.com/shorts/YhtDiq2FYSk", cor: "g4" },
   { nicho: "tech",    titulo: "App Emissor de Notas Fiscais", marca: "Spedy", formato: "vídeo UGC 9:16", capa: "fotos/spedy-notas-fiscais.jpg", link: "https://youtube.com/shorts/sKdXU4DWR_k", cor: "g4" },
   { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-1.jpg", link: "https://youtube.com/shorts/Rgbuq1aSnl4", cor: "g1" },
   { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-2.jpg", link: "https://youtube.com/shorts/DLEdzxQxdeU", cor: "g1" },
   { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-3.jpg", link: "https://youtube.com/shorts/Xp0R2R70NHo", cor: "g1" },
-  { nicho: "beleza",  titulo: "Queda capilar após uso de canetas emagrecedoras", marca: "Vichy", detalhe: "Storytelling: emagrecimento com canetas e queda capilar", formato: "vídeo UGC 9:16", capa: "fotos/vichy-queda-1.jpg", link: "https://youtube.com/shorts/CW-AYMA9fko", cor: "g1", selo: "🔥 +5M visualizações" },
   { nicho: "beleza",  titulo: "Queda capilar após uso de canetas emagrecedoras", marca: "Vichy", detalhe: "Continuação da história real", formato: "vídeo UGC 9:16", capa: "fotos/vichy-queda-2.jpg", link: "https://youtube.com/shorts/DYN0ALRt8oc", cor: "g1" },
   { nicho: "beleza",  titulo: "Dove", detalhe: "Storytelling, cuidados com o cabelo no verão", formato: "vídeo UGC 9:16", capa: "fotos/dove-storytelling.jpg", link: "https://youtube.com/shorts/G4OEneCsXGQ", cor: "g1" },
   { nicho: "beleza",  titulo: "Dove", detalhe: "Vídeo sensorial", formato: "vídeo UGC 9:16", capa: "fotos/dove-cabelo.jpg", link: "https://youtube.com/shorts/2JlpJbOEZoo", cor: "g1" },
@@ -815,7 +827,7 @@ const depoimentos = [
   { texto: "A qualidade da imagem, o tom de voz e a naturalidade ficaram exatamente como planejamos, superando nossas expectativas iniciais.", nome: "Open English", empresa: "", logo: "logos/open-english.png" },
   { texto: "Oie, o conteúdo ficou ótimo 💜💜💜", nome: "Mercado Livre", empresa: "", logo: "logos/mercado-livre.png" },
   { texto: "Arrasou muito no conteúdo! Muito obrigada pela confiança e por compartilhar sua experiência com a gente, Su! Ansiosa para ver o que mais vem por aí.", nome: "Skence", empresa: "", logo: "logos/skence.jpg", cobrir: true },
-  { texto: "Ameiii o conteúdo! Ficou sensacional. Adorei a edição também.", nome: "Parceira de campanha", empresa: "" }
+  { texto: "Ameiii o conteúdo! Ficou sensacional. Adorei a edição também.", nome: "Leev", empresa: "", logo: "logos/leev.jpg" }
 ];
 
 /* =====================================================================
