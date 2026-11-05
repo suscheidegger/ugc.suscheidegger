@@ -135,6 +135,19 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 /* a plantinha da capa só aparece em telas largas, na margem, longe do texto */
 .so-largo{display:none}
 @media (min-width:1400px){.so-largo{display:block}}
+/* cogumelo: identidade da Sumani */
+.cogumelo{width:46px;height:52px;--r:-6deg}
+.cogumelo::before{
+  content:"";position:absolute;top:0;left:0;width:46px;height:26px;z-index:1;border-radius:46px 46px 10px 10px;
+  background:
+    radial-gradient(circle at 30% 50%, var(--linho) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 60% 28%, var(--linho) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 78% 62%, var(--linho) 0 2px, transparent 2.5px),
+    var(--terra)
+}
+.cogumelo::after{content:"";position:absolute;top:21px;left:15px;width:16px;height:30px;border-radius:6px 6px 8px 8px;background:#f6ecdc;box-shadow:inset -3px 0 0 rgba(58,42,31,.08), 0 2px 4px rgba(58,42,31,.08)}
+.cogumelo-rodape{position:relative;display:inline-block;vertical-align:middle;scale:.5;margin:-14px -6px -14px -4px}
+.cogumelo-rodape::before{background:radial-gradient(circle at 30% 50%, var(--tinta) 0 3px, transparent 3.5px),radial-gradient(circle at 60% 28%, var(--tinta) 0 2.5px, transparent 3px),#e08d6e}
 .envelope{width:110px;height:72px;background:var(--papel);border-radius:6px;box-shadow:var(--sombra);overflow:hidden;--r:-5deg}
 .envelope::before{content:"";position:absolute;left:0;top:-36px;width:110px;height:72px;background:var(--linho-escuro);transform:scaleY(.72) rotate(45deg);transform-origin:center;left:0;top:-38px;width:78px;height:78px;left:16px}
 .envelope::after{content:"";position:absolute;right:12px;bottom:10px;width:20px;height:20px;border-radius:50%;background:var(--terra)}
@@ -447,6 +460,7 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 <section class="capa" id="capa" aria-labelledby="titulo-capa">
   <div class="objetos" aria-hidden="true">
     <div class="obj radio" style="top:120px;right:4%;animation-delay:-2s"><i></i></div>
+    <div class="obj cogumelo some-celular" style="bottom:150px;right:40%;animation-delay:-4s"></div>
     <div class="obj planta so-largo" style="bottom:140px;left:1%;animation-delay:-5s"><span class="vaso"></span><span class="folha f1"></span><span class="folha f2"></span><span class="folha f3"></span></div>
   </div>
   <div class="container capa-grade">
@@ -529,6 +543,7 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 <section class="trabalhos" id="trabalhos" aria-labelledby="titulo-trabalhos">
   <div class="objetos" aria-hidden="true">
     <div class="obj envelope some-celular" style="top:90px;right:6%;animation-delay:-6s"></div>
+    <div class="obj cogumelo" style="top:110px;left:2%;scale:.8;animation-delay:-2s"></div>
   </div>
   <div class="container">
     <div class="revelar">
@@ -561,6 +576,7 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 <section class="numeros" id="numeros" aria-labelledby="titulo-numeros">
   <div class="objetos" aria-hidden="true">
     <div class="obj planta" style="top:60px;right:3%;animation-delay:-1s"><span class="vaso"></span><span class="folha f1"></span><span class="folha f2"></span><span class="folha f3"></span></div>
+    <div class="obj cogumelo some-celular" style="bottom:80px;left:2%;animation-delay:-5s"></div>
   </div>
   <div class="container">
     <div class="revelar">
@@ -624,7 +640,7 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 <!-- ===== 8. RODAPÉ ===== -->
 <footer class="rodape">
   <div class="container">
-    <a class="marca-nome" href="#capa">Sumani <em>Scheidegger</em></a>
+    <a class="marca-nome" href="#capa">Sumani <em>Scheidegger</em> <span class="cogumelo cogumelo-rodape" aria-hidden="true"></span></a>
     <ul class="redes">
       <li><a href="https://www.instagram.com/ugc.suscheidegger/" target="_blank" rel="noopener">Instagram</a></li>
       <li><a href="https://www.tiktok.com/@suscheidegger.ugc" target="_blank" rel="noopener">TikTok</a></li>
