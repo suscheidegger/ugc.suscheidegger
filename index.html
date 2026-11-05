@@ -189,9 +189,19 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .trilho ul{display:flex;list-style:none;margin:0;padding:0}
 .trilho li{white-space:nowrap;padding:0 28px;font-family:var(--serif);font-size:1.3rem;color:var(--tinta-suave);display:flex;align-items:center;gap:28px}
 .trilho li::after{content:"✦";font-size:.8rem;color:var(--terra)}
-.logo-marca{height:40px;width:auto;max-width:150px;object-fit:contain;opacity:.85;transition:opacity .2s}
-.logo-marca:hover{opacity:1}
-.logo-marca.alto{height:58px}
+/* logos das marcas em círculos com as cores oficiais */
+.faixa-marcas li{padding:0 8px}
+.faixa-marcas li::after{display:none}
+.selo-marca{
+  width:92px;height:92px;border-radius:50%;background:#fff;flex:none;
+  display:grid;place-items:center;overflow:hidden;padding:16px;
+  box-shadow:0 4px 14px rgba(58,42,31,.12);border:1px solid rgba(58,42,31,.06);
+  transition:transform .25s ease
+}
+.selo-marca:hover{transform:scale(1.08)}
+.selo-marca img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.selo-marca.so-nome{background:var(--terra);color:#fff;font-family:var(--serif);font-size:1rem;line-height:1.1;text-align:center;white-space:normal;padding:10px}
+@media (max-width:720px){.selo-marca{width:76px;height:76px;padding:13px}}
 @keyframes rolar{to{transform:translateX(-50%)}}
 .rolagem:hover .trilho{animation-play-state:paused}
 
@@ -632,22 +642,23 @@ const numerosCapa = [
 ];
 
 /* Marcas da faixa fina da capa.
-   logo: caminho da imagem na pasta "logos" (PNG transparente). Deixe "" para mostrar o nome escrito. */
+   logo: caminho da imagem na pasta "logos". Deixe "" para mostrar o nome escrito no círculo.
+   fundo: cor do círculo (opcional; sem ela o círculo fica branco). */
 const marcas = [
   { nome: "Dove",          logo: "logos/dove.png" },
   { nome: "Seda",          logo: "logos/seda.png" },
   { nome: "Rexona",        logo: "logos/rexona.png" },
   { nome: "Mercado Livre", logo: "logos/mercado-livre.png" },
   { nome: "Méliuz",        logo: "logos/meliuz.png" },
-  { nome: "Trinta",        logo: "logos/trinta.png" },
+  { nome: "Trinta",        logo: "logos/trinta.png", fundo: "#ffc603" },
   { nome: "Neutrogena",    logo: "logos/neutrogena.png" },
   { nome: "Eudora",        logo: "logos/eudora.png" },
-  { nome: "O Boticário",   logo: "logos/o-boticario.png" },
+  { nome: "O Boticário",   logo: "logos/o-boticario.png", fundo: "#70967f" },
   { nome: "OMO",           logo: "logos/omo.png" },
   { nome: "Vichy",         logo: "" },
   { nome: "Garnier",       logo: "" },
   { nome: "L’Oréal",       logo: "logos/loreal.png" },
-  { nome: "Uniasselvi",    logo: "logos/uniasselvi.png" },
+  { nome: "Uniasselvi",    logo: "logos/uniasselvi.png", fundo: "#f8dc0f" },
   { nome: "Leev",          logo: "" },
   { nome: "Befit",         logo: "" },
   { nome: "Open English",  logo: "logos/open-english.png" },
@@ -747,8 +758,8 @@ function preencherTrilho(el, itens) {
   el.innerHTML = lista + lista.replace("<ul>", '<ul aria-hidden="true">');
 }
 preencherTrilho($("#trilhoMarcas"), marcas.map((m) => m.logo
-  ? `<img class="logo-marca" src="${esc(m.logo)}" alt="${esc(m.nome)}" loading="lazy" onload="if(this.naturalWidth/this.naturalHeight<1.7)this.classList.add('alto')" onerror="this.replaceWith(document.createTextNode(this.alt))">`
-  : esc(m.nome)));
+  ? `<span class="selo-marca" style="background:${esc(m.fundo || "#fff")}"><img src="${esc(m.logo)}" alt="${esc(m.nome)}" loading="lazy"></span>`
+  : `<span class="selo-marca so-nome" style="${m.fundo ? "background:" + esc(m.fundo) : ""}">${esc(m.nome)}</span>`));
 preencherTrilho($("#trilhoServicos"), servicos.map((s) => esc(s.titulo)));
 
 /* destaques */
