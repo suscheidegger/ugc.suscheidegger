@@ -150,10 +150,22 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .mini-numeros strong{display:block;font-family:var(--serif);font-weight:400;font-size:2.2rem;line-height:1;color:var(--terra-escuro)}
 .mini-numeros span{font-size:.92rem;color:var(--tinta-suave)}
 .foto-recorte{
-  position:relative;background:#fff;padding:14px 14px 56px;border-radius:6px;
+  position:relative;background:#fff;padding:14px 14px 16px;border-radius:6px;
   box-shadow:var(--sombra-forte);transform:rotate(2.5deg);max-width:420px;margin-inline:auto;
 }
-.foto-recorte .legenda-mao{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-family:var(--mao);font-size:1.45rem;color:var(--tinta-suave)}
+.foto-recorte .legenda-mao{display:block;margin-top:12px;line-height:1.2;text-align:center;font-family:var(--mao);font-size:1.45rem;color:var(--tinta-suave)}
+/* fotos reais nos quadros */
+.foto-real,.foto-viva{display:block;width:100%;aspect-ratio:4/5;border-radius:4px;object-fit:cover}
+.foto-viva{position:relative;overflow:hidden}
+.foto-viva img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;animation:zoomLento 14s ease-in-out infinite alternate}
+@keyframes zoomLento{from{transform:scale(1)}to{transform:scale(1.08)}}
+.adesivo-pisca{
+  position:absolute;right:12px;bottom:12px;width:58px;height:58px;border-radius:50%;
+  background:var(--papel);display:grid;place-items:center;font-size:2rem;line-height:1;
+  box-shadow:0 6px 16px rgba(58,42,31,.25);transform:rotate(10deg);
+  animation:piscadinha 4s ease-in-out infinite
+}
+@keyframes piscadinha{0%,70%,100%{transform:rotate(10deg) scale(1)}78%{transform:rotate(-8deg) scale(1.18)}86%{transform:rotate(14deg) scale(1.05)}}
 .fita{position:absolute;top:-14px;left:50%;width:110px;height:30px;transform:translateX(-50%) rotate(-3deg);background:rgba(109,122,76,.35);border-radius:2px}
 
 /* blocos de imagem provisórios (degradê + legenda de formato) */
@@ -433,11 +445,10 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
     <div class="capa-foto revelar">
       <figure class="foto-recorte" style="margin:0 auto">
         <span class="fita" aria-hidden="true"></span>
-        <!-- FOTO PRINCIPAL: para trocar pela foto real, apague a div class="ph" abaixo e coloque:
-             <img src="minha-foto.jpg" alt="Sumani sorrindo segurando um produto" style="aspect-ratio:4/5;object-fit:cover;width:100%;border-radius:4px">
-             Salve a foto na mesma pasta do index.html. Use JPG ou WEBP com até 300 KB. -->
-        <div class="ph ph-45 g1" role="img" aria-label="Espaço para a foto da creator">
-          <span class="fmt">foto da creator 4:5</span>
+        <!-- FOTO PRINCIPAL: para trocar, salve outra foto 4:5 na pasta "fotos" e mude o src abaixo -->
+        <div class="foto-viva">
+          <img src="fotos/sumani.jpg" alt="Sumani Scheidegger sorrindo para a câmera" width="720" height="900">
+          <span class="adesivo-pisca" aria-hidden="true">😉</span>
         </div>
         <figcaption class="legenda-mao">oi, prazer! sou a Su</figcaption>
         <div class="carimbo" aria-hidden="true">
@@ -462,18 +473,15 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
   <div class="container sobre-grade">
     <figure class="foto-recorte revelar" style="margin:0 auto">
       <span class="fita" aria-hidden="true"></span>
-      <!-- FOTO DO SOBRE: troque a div class="ph" por
-           <img src="sobre.jpg" alt="Sumani gravando um vídeo em casa" style="aspect-ratio:4/5;object-fit:cover;width:100%;border-radius:4px"> -->
-      <div class="ph ph-45 g3" role="img" aria-label="Espaço para a foto dos bastidores">
-        <span class="fmt">foto de bastidores 4:5</span>
-      </div>
+      <!-- FOTO DO SOBRE: para trocar, salve outra foto 4:5 na pasta "fotos" e mude o src abaixo -->
+      <img class="foto-real" src="fotos/bastidores.jpg" alt="Sumani sentindo o perfume de um sabonete Francis num jardim com flores" width="720" height="900" loading="lazy">
       <figcaption class="legenda-mao">bastidores de uma gravação</figcaption>
     </figure>
     <div class="sobre-texto revelar">
       <span class="rotulo">sobre mim</span>
       <h2 id="titulo-sobre">Conteúdo que parece <em>conversa</em>, não propaganda</h2>
       <p>Oi, eu sou a Sumani, mas pode me chamar de Su. Crio vídeos para marcas de beleza, fitness e tech do jeito que eu indicaria um produto para uma amiga: com calma, na minha rotina de verdade e falando o que eu realmente sinto usando.</p>
-      <p>Moro em São Mateus, no Espírito Santo, e transformo a minha casa em cenário. Cada vídeo começa com um bom roteiro e termina com um conteúdo que gera confiança em quem assiste.</p>
+      <p>Moro em São Mateus, no Espírito Santo, e gravo onde a história pede: na minha casa, num café, no parque ou em qualquer lugar que combine com o produto. Cada vídeo começa com um bom roteiro e termina com um conteúdo que gera confiança em quem assiste.</p>
       <ul class="promessas">
         <li><span class="check" aria-hidden="true">✓</span><span><strong>Roteiro aprovado antes de gravar</strong>, para você saber exatamente o que vai receber.</span></li>
         <li><span class="check" aria-hidden="true">✓</span><span><strong>Uma rodada de ajuste inclusa</strong> em todos os vídeos.</span></li>
