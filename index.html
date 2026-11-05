@@ -179,25 +179,25 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .foto-recorte .legenda-mao{display:block;margin-top:12px;line-height:1.2;text-align:center;font-family:var(--mao);font-size:1.45rem;color:var(--tinta-suave)}
 /* fotos reais nos quadros */
 /* ===== LEQUE DE FOTOS DA CAPA ===== */
-.leque{position:relative;width:min(480px,100%);aspect-ratio:1/1;margin-bottom:56px;cursor:pointer;outline:none}
-.leque .pola{position:absolute;top:0;bottom:0;left:18%;right:18%;background:#fff;padding:5px 5px 22px;border-radius:10px;overflow:hidden;
+.leque{position:relative;width:min(480px,100%);aspect-ratio:10/9;margin-bottom:70px;cursor:pointer;outline:none}
+.leque .pola{position:absolute;top:0;bottom:0;left:24%;right:24%;background:#fff;padding:5px 5px 20px;border-radius:10px;overflow:hidden;
   box-shadow:0 18px 40px rgba(58,42,31,.22);transform-origin:50% 100%;
   transition:transform .6s cubic-bezier(.2,.8,.2,1.15), box-shadow .4s}
-.leque .pola img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block}
-.leque .esq{transform:rotate(-8deg) translateX(-42%)}
-.leque .dir{transform:rotate(8deg) translateX(42%)}
+.leque .pola img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;border-radius:6px;display:block}
+.leque .esq{transform:rotate(-8deg) translateX(-55%)}
+.leque .dir{transform:rotate(8deg) translateX(55%)}
 .leque .meio{z-index:2}
-.leque:hover .esq,.leque.aberto .esq,.leque:focus-visible .esq{transform:rotate(-14deg) translate(-78%,6%)}
-.leque:hover .dir,.leque.aberto .dir,.leque:focus-visible .dir{transform:rotate(14deg) translate(78%,6%)}
+.leque:hover .esq,.leque.aberto .esq,.leque:focus-visible .esq{transform:rotate(-13deg) translate(-88%,5%)}
+.leque:hover .dir,.leque.aberto .dir,.leque:focus-visible .dir{transform:rotate(13deg) translate(88%,5%)}
 .leque:hover .meio,.leque.aberto .meio,.leque:focus-visible .meio{transform:translateY(-6%) scale(1.04)}
 .leque:hover .pola,.leque.aberto .pola{box-shadow:0 24px 50px rgba(58,42,31,.28)}
-.leque .legenda-mao{position:absolute;left:0;right:0;bottom:-52px;margin:0;z-index:3}
+.leque .legenda-mao{position:absolute;left:0;right:0;bottom:-62px;margin:0;z-index:5;text-align:center;font-family:var(--mao);font-size:1.6rem;color:var(--tinta-suave);line-height:1.2}
 @media (max-width:720px){
   .leque{width:min(340px,86vw)}
-  .leque .esq{transform:rotate(-7deg) translateX(-30%)}
-  .leque .dir{transform:rotate(7deg) translateX(30%)}
-  .leque:hover .esq,.leque.aberto .esq{transform:rotate(-12deg) translate(-62%,6%)}
-  .leque:hover .dir,.leque.aberto .dir{transform:rotate(12deg) translate(62%,6%)}
+  .leque .esq{transform:rotate(-7deg) translateX(-45%)}
+  .leque .dir{transform:rotate(7deg) translateX(45%)}
+  .leque:hover .esq,.leque.aberto .esq{transform:rotate(-11deg) translate(-70%,5%)}
+  .leque:hover .dir,.leque.aberto .dir{transform:rotate(11deg) translate(70%,5%)}
 }
 .foto-real,.foto-viva{display:block;width:100%;height:auto;aspect-ratio:4/5;border-radius:4px;object-fit:cover}
 .foto-viva{position:relative;overflow:hidden}
@@ -517,9 +517,9 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
       <!-- LEQUE DE FOTOS: três fotos recortadas (PNG/WEBP sem fundo) na pasta "fotos".
            Passando o mouse (ou tocando no celular) o leque abre. -->
       <figure class="leque" tabindex="0" style="margin:0 auto" aria-label="Três fotos da Sumani que se abrem em leque">
-        <span class="pola esq"><img src="fotos/polaroide-treino.jpg" alt="Sumani treinando crossfit com halteres" width="420" height="525"></span>
-        <span class="pola dir"><img src="fotos/polaroide-moda.jpg" alt="Sumani de óculos escuros e casaco preto" width="420" height="525"></span>
-        <span class="pola meio"><img src="fotos/polaroide-recovery.jpg" alt="Sumani segurando o spray Recovery da Phytoca" width="420" height="525"></span>
+        <span class="pola esq"><img src="fotos/polaroide-treino.jpg" alt="Sumani treinando crossfit com halteres" width="400" height="692"></span>
+        <span class="pola dir"><img src="fotos/polaroide-moda.jpg" alt="Sumani de óculos escuros e casaco preto" width="400" height="692"></span>
+        <span class="pola meio"><img src="fotos/polaroide-recovery.jpg" alt="Sumani segurando o spray Recovery da Phytoca" width="400" height="692"></span>
         <figcaption class="legenda-mao">oi, prazer! sou a Su</figcaption>
       </figure>
     </div>
