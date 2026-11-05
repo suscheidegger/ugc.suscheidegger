@@ -697,8 +697,8 @@ const marcas = [
    capa: caminho da imagem vertical 9:16 (exemplo: "capa-1.jpg"). Deixe "" para usar o degradê.
    titulo e contexto: placeholders para você trocar. */
 const destaques = [
-  { link: "https://www.tiktok.com/@suscheidegger.ugc/video/7649388371554454804", capa: "", plataforma: "TikTok",
-    numero: "+5M", rotulo: "views no TikTok", titulo: "TÍTULO DO CONTEÚDO 01", contexto: "Marca e contexto do vídeo: troque aqui.", cor: "g1" },
+  { link: "https://youtube.com/shorts/CW-AYMA9fko", capa: "fotos/vichy-destaque.jpg", plataforma: "TikTok",
+    numero: "+5M", rotulo: "views no TikTok", titulo: "Queda capilar após uso de canetas emagrecedoras", contexto: "Vichy", cor: "g1" },
   { link: "https://www.instagram.com/reel/DcmZHMPRLJ4/", capa: "", plataforma: "Reels",
     numero: "+14K", rotulo: "views no Reels", titulo: "TÍTULO DO CONTEÚDO 02", contexto: "Marca e contexto do vídeo: troque aqui.", cor: "g2" },
   { link: "https://www.instagram.com/ugc.suscheidegger/reel/DXmlhB3R16T/", capa: "", plataforma: "Reels",
@@ -710,7 +710,7 @@ const nichos = [
   { chave: "todos",   nome: "Todos" },
   { chave: "beleza",  nome: "Beleza" },
   { chave: "fitness", nome: "Lifestyle & Fitness" },
-  { chave: "tech",    nome: "Tech" }
+  { chave: "tech",    nome: "Tech & Educação" }
 ];
 
 /* Trabalhos da galeria. Só aparecem os botões de nicho que tiverem pelo menos um trabalho.
@@ -721,7 +721,16 @@ const trabalhos = [
   { nicho: "tech",    titulo: "App Emissor de Notas Fiscais", marca: "Spedy", formato: "vídeo UGC 9:16", capa: "fotos/spedy-notas-fiscais.jpg", link: "https://youtube.com/shorts/sKdXU4DWR_k", cor: "g4" },
   { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-1.jpg", link: "https://youtube.com/shorts/Rgbuq1aSnl4", cor: "g1" },
   { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-2.jpg", link: "https://youtube.com/shorts/DLEdzxQxdeU", cor: "g1" },
-  { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-3.jpg", link: "https://youtube.com/shorts/Xp0R2R70NHo", cor: "g1" }
+  { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-3.jpg", link: "https://youtube.com/shorts/Xp0R2R70NHo", cor: "g1" },
+  { nicho: "beleza",  titulo: "Queda capilar após uso de canetas emagrecedoras", marca: "Vichy", formato: "vídeo UGC 9:16", capa: "fotos/vichy-queda-1.jpg", link: "https://youtube.com/shorts/CW-AYMA9fko", cor: "g1" },
+  { nicho: "beleza",  titulo: "Queda capilar após uso de canetas emagrecedoras", marca: "Vichy", formato: "vídeo UGC 9:16", capa: "fotos/vichy-queda-2.jpg", link: "https://youtube.com/shorts/DYN0ALRt8oc", cor: "g1" },
+  { nicho: "beleza",  titulo: "Produtos de Cabelo", marca: "Dove", detalhe: "vídeo sensorial", formato: "vídeo UGC 9:16", capa: "fotos/dove-cabelo.jpg", link: "https://youtube.com/shorts/2JlpJbOEZoo", cor: "g1" },
+  { nicho: "beleza",  titulo: "Reset nos fios",   marca: "Eudora", formato: "vídeo UGC 9:16", capa: "fotos/eudora-reset.jpg", link: "https://youtube.com/shorts/829RP5rzYJQ", cor: "g1" },
+  { nicho: "beleza",  titulo: "Seda + Kibon Collab", marca: "Seda", formato: "vídeo UGC 9:16", capa: "fotos/seda-kibon.jpg", link: "https://youtube.com/shorts/iUxpZAafD9M", cor: "g1" },
+  { nicho: "fitness", titulo: "Doce de leite proteico", marca: "Dulce Protein", formato: "vídeo UGC 9:16", capa: "fotos/dulce-doce-de-leite.jpg", link: "https://youtube.com/shorts/EiJ54jmAojU", cor: "g2" },
+  { nicho: "tech",    titulo: "App de Administração Financeira", marca: "Trinta", formato: "vídeo UGC 9:16", capa: "fotos/trinta-financas.jpg", link: "https://youtube.com/shorts/OYdNpn8Fmcc", cor: "g4" },
+  { nicho: "tech",    titulo: "App de Consulta de Score", marca: "APROV", formato: "vídeo UGC 9:16", capa: "fotos/aprov-score.jpg", link: "https://youtube.com/shorts/rXV79uRLobI", cor: "g4" },
+  { nicho: "tech",    titulo: "Curso de Inglês", marca: "Open English", formato: "vídeo UGC 9:16", capa: "fotos/open-english-curso.jpg", link: "https://youtube.com/shorts/SffYENMb8XA", cor: "g4" }
 ];
 
 /* Serviços (também alimentam a faixa terracota que rola) */
@@ -857,7 +866,7 @@ $("#galeria").innerHTML = trabalhos.map((t) => {
   const nomeNicho = (nichos.find((n) => n.chave === t.nicho) || {}).nome || t.nicho;
   const formato = t.formato.includes("1:1") ? "ph-11" : "ph-45";
   const conteudo = `<div style="position:relative">${bloco(formato, t.cor, t.capa, t.formato, t.titulo + " para " + t.marca)}${t.link ? '<span class="play" aria-hidden="true"></span>' : ""}</div>
-      <h3>${esc(t.titulo)}</h3><p>${esc(t.marca)}</p><span class="etiqueta">#${esc(nomeNicho.toLowerCase())}</span>`;
+      <h3>${esc(t.titulo)}</h3><p>${esc(t.marca)}${t.detalhe ? " · " + esc(t.detalhe) : ""}</p><span class="etiqueta">#${esc(nomeNicho.toLowerCase())}</span>`;
   return `<li class="trabalho" data-nicho="${esc(t.nicho)}">${t.link ? `<a href="${esc(t.link)}" target="_blank" rel="noopener" data-link="${esc(t.link)}" data-titulo="${esc(t.titulo)}" aria-label="Assistir: ${esc(t.titulo)}, ${esc(t.marca)}" style="text-decoration:none;display:block">${conteudo}</a>` : conteudo}</li>`;
 }).join("");
 $("#filtros").addEventListener("click", (e) => {
