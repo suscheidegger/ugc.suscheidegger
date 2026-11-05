@@ -302,6 +302,11 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .depoimento blockquote::before{content:"“";display:block;font-size:3.4rem;line-height:.6;color:var(--terra);margin-bottom:.2rem}
 .depoimento cite{font-style:normal;font-weight:500}
 .depoimento cite span{display:block;font-weight:300;color:var(--tinta-suave);font-size:.92rem}
+.autor{display:flex;align-items:center;gap:12px}
+.logo-dep{flex:none;width:46px;height:46px;border-radius:50%;background:#fff;border:1px solid rgba(58,42,31,.1);display:grid;place-items:center;overflow:hidden;padding:7px}
+.logo-dep img{max-width:100%;max-height:100%;object-fit:contain}
+.logo-dep.cobrir{padding:0}
+.logo-dep.cobrir img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
 
 /* ===== CONTATO ===== */
 .contato-grade{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);align-items:start}
@@ -684,6 +689,7 @@ const marcas = [
   { nome: "BigBoom",       logo: "logos/bigboom.png" },
   { nome: "Creamy Skincare", logo: "logos/creamy.png" },
   { nome: "Francis",       logo: "logos/francis.png" },
+  { nome: "Skence",        logo: "logos/skence.jpg", cobrir: true },
   { nome: "Authentic Nutri", logo: "logos/authentic-nutri.png" },
   { nome: "Wabfy",         logo: "logos/wabfy.jpg", cobrir: true }
 ];
@@ -806,9 +812,9 @@ const resultados = [
 
 /* Quatro depoimentos: placeholders para trocar pelos depoimentos reais */
 const depoimentos = [
-  { texto: "A qualidade da imagem, o tom de voz e a naturalidade ficaram exatamente como planejamos, superando nossas expectativas iniciais.", nome: "Open English", empresa: "" },
-  { texto: "Oie, o conteúdo ficou ótimo 💜💜💜", nome: "Mercado Livre", empresa: "" },
-  { texto: "Arrasou muito no conteúdo! Muito obrigada pela confiança e por compartilhar sua experiência com a gente, Su! Ansiosa para ver o que mais vem por aí.", nome: "Skence", empresa: "" },
+  { texto: "A qualidade da imagem, o tom de voz e a naturalidade ficaram exatamente como planejamos, superando nossas expectativas iniciais.", nome: "Open English", empresa: "", logo: "logos/open-english.png" },
+  { texto: "Oie, o conteúdo ficou ótimo 💜💜💜", nome: "Mercado Livre", empresa: "", logo: "logos/mercado-livre.png" },
+  { texto: "Arrasou muito no conteúdo! Muito obrigada pela confiança e por compartilhar sua experiência com a gente, Su! Ansiosa para ver o que mais vem por aí.", nome: "Skence", empresa: "", logo: "logos/skence.jpg", cobrir: true },
   { texto: "Ameiii o conteúdo! Ficou sensacional. Adorei a edição também.", nome: "Parceira de campanha", empresa: "" }
 ];
 
@@ -946,7 +952,7 @@ $("#gradeMetricas").innerHTML = metricas.map((m) => `
 if ($("#gradeResultados")) $("#gradeResultados").innerHTML = resultados.map((r) => `
   <li class="resultado revelar"><span class="valor">${esc(r.valor)}</span><h3>${esc(r.titulo)}</h3><p>${esc(r.texto)}</p></li>`).join("");
 $("#gradeDepoimentos").innerHTML = depoimentos.map((d) => `
-  <li class="depoimento revelar"><figure style="margin:0"><blockquote>${esc(d.texto)}</blockquote><figcaption><cite>${esc(d.nome)}<span>${esc(d.empresa)}</span></cite></figcaption></figure></li>`).join("");
+  <li class="depoimento revelar"><figure style="margin:0"><blockquote>${esc(d.texto)}</blockquote><figcaption class="autor">${d.logo ? `<span class="logo-dep${d.cobrir ? " cobrir" : ""}"><img src="${esc(d.logo)}" alt="" loading="lazy"></span>` : ""}<cite>${esc(d.nome)}${d.empresa ? `<span>${esc(d.empresa)}</span>` : ""}</cite></figcaption></figure></li>`).join("");
 
 /* contador animado */
 function animarContador(el) {
