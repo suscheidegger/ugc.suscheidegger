@@ -183,7 +183,7 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .carimbo b{font-family:var(--mao);font-size:1.6rem;line-height:1;font-weight:700;text-align:center}
 
 /* faixa fina de marcas */
-.faixa-marcas{margin-top:clamp(56px,8vw,96px);border-block:1px solid rgba(58,42,31,.14);padding:18px 0;position:relative;z-index:1}
+.faixa-marcas{margin-top:clamp(56px,8vw,96px);padding:18px 0;position:relative;z-index:1}
 .rolagem{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .trilho{display:flex;width:max-content;animation:rolar 45s linear infinite}
 .trilho ul{display:flex;list-style:none;margin:0;padding:0}
@@ -200,6 +200,8 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 }
 .selo-marca:hover{transform:scale(1.08)}
 .selo-marca img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.selo-marca.cobrir{padding:0}
+.selo-marca.cobrir img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
 .selo-marca.so-nome{background:var(--terra);color:#fff;font-family:var(--serif);font-size:1rem;line-height:1.1;text-align:center;white-space:normal;padding:10px}
 @media (max-width:720px){.selo-marca{width:76px;height:76px;padding:13px}}
 @keyframes rolar{to{transform:translateX(-50%)}}
@@ -643,7 +645,9 @@ const numerosCapa = [
 
 /* Marcas da faixa fina da capa.
    logo: caminho da imagem na pasta "logos". Deixe "" para mostrar o nome escrito no círculo.
-   fundo: cor do círculo (opcional; sem ela o círculo fica branco). */
+   fundo: cor do círculo (opcional; sem ela o círculo fica branco).
+   cobrir: true faz a imagem preencher o círculo inteiro (bom para logo quadrado com fundo colorido).
+   respiro: margem interna em pixels (aumente se o logo encostar na borda do círculo). */
 const marcas = [
   { nome: "Dove",          logo: "logos/dove.png" },
   { nome: "Seda",          logo: "logos/seda.png" },
@@ -654,12 +658,12 @@ const marcas = [
   { nome: "Neutrogena",    logo: "logos/neutrogena.png" },
   { nome: "Eudora",        logo: "logos/eudora.png" },
   { nome: "O Boticário",   logo: "logos/o-boticario.png", fundo: "#70967f" },
-  { nome: "OMO",           logo: "logos/omo.png" },
+  { nome: "OMO",           logo: "logos/omo.png", respiro: 22 },
   { nome: "Vichy",         logo: "logos/vichy.png" },
   { nome: "Garnier",       logo: "logos/garnier.png" },
   { nome: "L’Oréal",       logo: "logos/loreal.png" },
   { nome: "Uniasselvi",    logo: "logos/uniasselvi.png", fundo: "#f8dc0f" },
-  { nome: "Befit",         logo: "logos/befit.png", fundo: "#3cf207" },
+  { nome: "Befit",         logo: "logos/befit.png", cobrir: true },
   { nome: "Open English",  logo: "logos/open-english.png" },
   { nome: "Breevo",        logo: "logos/breevo.png" },
   { nome: "BigBoom",       logo: "logos/bigboom.png" },
@@ -759,7 +763,7 @@ function preencherTrilho(el, itens) {
   el.innerHTML = lista + lista.replace("<ul>", '<ul aria-hidden="true">');
 }
 preencherTrilho($("#trilhoMarcas"), marcas.map((m) => m.logo
-  ? `<span class="selo-marca" style="background:${esc(m.fundo || "#fff")}"><img src="${esc(m.logo)}" alt="${esc(m.nome)}" loading="lazy"></span>`
+  ? `<span class="selo-marca${m.cobrir ? " cobrir" : ""}" style="background:${esc(m.fundo || "#fff")}${m.respiro ? ";padding:" + Number(m.respiro) + "px" : ""}"><img src="${esc(m.logo)}" alt="${esc(m.nome)}" loading="lazy"></span>`
   : `<span class="selo-marca so-nome" style="${m.fundo ? "background:" + esc(m.fundo) : ""}">${esc(m.nome)}</span>`));
 preencherTrilho($("#trilhoServicos"), servicos.map((s) => esc(s.titulo)));
 
