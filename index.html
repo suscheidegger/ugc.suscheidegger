@@ -355,6 +355,9 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .fechar{position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:50%;border:0;background:var(--linho);cursor:pointer;font-size:1.4rem;line-height:1;color:var(--tinta)}
 .fechar:hover{background:var(--linho-escuro)}
 .modal .btn{width:100%}
+.modal-video{position:relative;width:min(380px,100%);height:min(760px,calc(100vh - 32px));background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--sombra-forte)}
+.modal-video .fechar{z-index:2;background:rgba(251,246,238,.95);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.moldura-video,.moldura-video iframe{display:block;width:100%;height:100%;border:0}
 
 /* ===== ANIMAÇÃO DE ENTRADA ===== */
 .js .revelar{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease}
@@ -619,6 +622,14 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 </footer>
 
 <!-- ===== CARD DE CAPTURA (aparece depois de 7 segundos, uma vez por visita) ===== -->
+<!-- ===== JANELA DOS VÍDEOS DE DESTAQUE ===== -->
+<div class="modal-fundo" id="modalVideo" aria-hidden="true">
+  <div class="modal-video" role="dialog" aria-modal="true" aria-label="Vídeo de destaque">
+    <button class="fechar" type="button" id="fecharVideo" aria-label="Fechar vídeo">×</button>
+    <div class="moldura-video" id="molduraVideo"></div>
+  </div>
+</div>
+
 <div class="modal-fundo" id="modalFundo" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tituloModal">
     <button class="fechar" type="button" id="fecharModal" aria-label="Fechar">×</button>
@@ -676,6 +687,7 @@ const marcas = [
   { nome: "Breevo",        logo: "logos/breevo.png" },
   { nome: "BigBoom",       logo: "logos/bigboom.png" },
   { nome: "Creamy Skincare", logo: "logos/creamy.png" },
+  { nome: "Francis",       logo: "logos/francis.png" },
   { nome: "Authentic Nutri", logo: "logos/authentic-nutri.png" },
   { nome: "Wabfy",         logo: "", fundo: "#7b3ff2" }
 ];
@@ -777,7 +789,7 @@ preencherTrilho($("#trilhoServicos"), servicos.map((s) => esc(s.titulo)));
 
 /* destaques */
 $("#gradeDestaques").innerHTML = destaques.map((d, i) => `
-  <a class="video-card revelar" href="${esc(d.link)}" target="_blank" rel="noopener" aria-label="Assistir: ${esc(d.titulo)}, ${esc(d.numero)} ${esc(d.rotulo)} (abre em nova aba)">
+  <a class="video-card revelar" href="${esc(d.link)}" target="_blank" rel="noopener" data-video="${i}" aria-label="Assistir: ${esc(d.titulo)}, ${esc(d.numero)} ${esc(d.rotulo)}">
     <div style="position:relative">
       ${bloco("ph-916", d.cor, d.capa, "capa do vídeo 9:16", "Capa do conteúdo de destaque " + (i + 1))}
       <span class="plataforma">${esc(d.plataforma)}</span>
@@ -790,6 +802,43 @@ $("#gradeDestaques").innerHTML = destaques.map((d, i) => `
       <p>${esc(d.contexto)}</p>
     </div>
   </a>`).join("");
+
+/* vídeos tocando dentro do portfólio: transforma o link do TikTok ou do Instagram no player oficial */
+function enderecoPlayer(link) {
+  const tiktok = link.match(/tiktok\.com\/.*video\/(\d+)/);
+  if (tiktok) return "https://www.tiktok.com/embed/v2/" + tiktok[1];
+  const insta = link.match(/instagram\.com\/(?:[^/]+\/)?(?:reel|p)\/([^/?#]+)/);
+  if (insta) return "https://www.instagram.com/reel/" + insta[1] + "/embed/";
+  return null;
+}
+const modalVideo = $("#modalVideo");
+let videoAberto = false, focoAntesVideo = null;
+function abrirVideo(i) {
+  const url = enderecoPlayer(destaques[i].link);
+  if (!url) return false;
+  focoAntesVideo = document.activeElement;
+  $("#molduraVideo").innerHTML = `<iframe src="${esc(url)}" title="${esc(destaques[i].titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`;
+  modalVideo.classList.add("aberto");
+  modalVideo.setAttribute("aria-hidden", "false");
+  videoAberto = true;
+  setTimeout(() => $("#fecharVideo").focus(), 60);
+  return true;
+}
+function fecharVideo() {
+  modalVideo.classList.remove("aberto");
+  modalVideo.setAttribute("aria-hidden", "true");
+  $("#molduraVideo").innerHTML = ""; /* para o vídeo ao fechar */
+  videoAberto = false;
+  if (focoAntesVideo && focoAntesVideo.focus) focoAntesVideo.focus();
+}
+$("#gradeDestaques").addEventListener("click", (e) => {
+  const card = e.target.closest("[data-video]");
+  if (!card || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  if (abrirVideo(Number(card.dataset.video))) e.preventDefault();
+});
+$("#fecharVideo").addEventListener("click", fecharVideo);
+modalVideo.addEventListener("click", (e) => { if (e.target === modalVideo) fecharVideo(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && videoAberto) fecharVideo(); });
 
 /* filtros e galeria */
 $("#filtros").innerHTML = nichos.map((n, i) =>
@@ -937,10 +986,12 @@ $("#formKit").addEventListener("submit", (e) => {
 let jaViu = false;
 try { jaViu = sessionStorage.getItem("midiaKitVisto") === "1"; } catch (erro) {}
 if (!jaViu) {
-  setTimeout(() => {
+  const mostrarKit = () => {
+    if (videoAberto) { setTimeout(mostrarKit, 5000); return; } /* espera o vídeo fechar */
     try { sessionStorage.setItem("midiaKitVisto", "1"); } catch (erro) {}
     abrirModal();
-  }, 7000);
+  };
+  setTimeout(mostrarKit, 7000);
 }
 
 /* ano automático no rodapé */
