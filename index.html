@@ -709,21 +709,15 @@ const destaques = [
 const nichos = [
   { chave: "todos",   nome: "Todos" },
   { chave: "beleza",  nome: "Beleza" },
-  { chave: "fitness", nome: "Fitness" },
+  { chave: "fitness", nome: "Lifestyle & Fitness" },
   { chave: "tech",    nome: "Tech" }
 ];
 
-/* Trabalhos da galeria. capa: caminho da imagem (deixe "" para o degradê). link: opcional. */
+/* Trabalhos da galeria. Só aparecem os botões de nicho que tiverem pelo menos um trabalho.
+   capa: imagem 4:5 na pasta "fotos". link: vídeo no YouTube, TikTok ou Instagram (toca dentro do portfólio). */
 const trabalhos = [
-  { nicho: "beleza",  titulo: "TÍTULO DO TRABALHO",  marca: "Marca 01", formato: "vídeo UGC 9:16", capa: "", link: "", cor: "g1" },
-  { nicho: "beleza",  titulo: "TÍTULO DO TRABALHO",  marca: "Marca 02", formato: "unboxing 9:16",  capa: "", link: "", cor: "g3" },
-  { nicho: "beleza",  titulo: "TÍTULO DO TRABALHO",  marca: "Marca 03", formato: "foto do produto 1:1", capa: "", link: "", cor: "g4" },
-  { nicho: "fitness", titulo: "TÍTULO DO TRABALHO",  marca: "Marca 04", formato: "vídeo UGC 9:16", capa: "", link: "", cor: "g2" },
-  { nicho: "fitness", titulo: "TÍTULO DO TRABALHO",  marca: "Marca 05", formato: "corte para anúncio 9:16", capa: "", link: "", cor: "g1" },
-  { nicho: "fitness", titulo: "TÍTULO DO TRABALHO",  marca: "Marca 06", formato: "foto do produto 1:1", capa: "", link: "", cor: "g3" },
-  { nicho: "tech",    titulo: "TÍTULO DO TRABALHO",  marca: "Marca 07", formato: "vídeo UGC 9:16", capa: "", link: "", cor: "g4" },
-  { nicho: "tech",    titulo: "TÍTULO DO TRABALHO",  marca: "Marca 08", formato: "unboxing 9:16",  capa: "", link: "", cor: "g2" },
-  { nicho: "tech",    titulo: "TÍTULO DO TRABALHO",  marca: "Marca 09", formato: "corte para anúncio 9:16", capa: "", link: "", cor: "g1" }
+  { nicho: "fitness", titulo: "App de Treino",    marca: "Befit",  formato: "vídeo UGC 9:16", capa: "fotos/befit-app-treino.jpg", link: "https://youtube.com/shorts/i7gsoW5zoXQ", cor: "g2" },
+  { nicho: "tech",    titulo: "App de Cashback",  marca: "Méliuz", formato: "vídeo UGC 9:16", capa: "fotos/meliuz-cashback.jpg",  link: "https://youtube.com/shorts/YhtDiq2FYSk", cor: "g4" }
 ];
 
 /* Serviços (também alimentam a faixa terracota que rola) */
@@ -809,16 +803,21 @@ function enderecoPlayer(link) {
   if (tiktok) return "https://www.tiktok.com/embed/v2/" + tiktok[1];
   const insta = link.match(/instagram\.com\/(?:[^/]+\/)?(?:reel|p)\/([^/?#]+)/);
   if (insta) return "https://www.instagram.com/reel/" + insta[1] + "/embed/";
+  const yt = link.match(/(?:youtube\.com\/(?:shorts\/|watch\?v=|embed\/)|youtu\.be\/)([\w-]{6,})/);
+  if (yt) return "https://www.youtube.com/embed/" + yt[1] + "?autoplay=1&rel=0";
   return null;
+}
+function nomeRede(link) {
+  return /tiktok/.test(link) ? "TikTok" : /youtu/.test(link) ? "YouTube" : "Instagram";
 }
 const modalVideo = $("#modalVideo");
 let videoAberto = false, focoAntesVideo = null;
-function abrirVideo(i) {
-  const url = enderecoPlayer(destaques[i].link);
+function abrirVideo(link, titulo) {
+  const url = enderecoPlayer(link);
   if (!url) return false;
   focoAntesVideo = document.activeElement;
-  $("#molduraVideo").innerHTML = `<iframe src="${esc(url)}" title="${esc(destaques[i].titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>
-    <a class="abrir-fora" href="${esc(destaques[i].link)}" target="_blank" rel="noopener">não carregou? abrir no ${esc(destaques[i].plataforma === "TikTok" ? "TikTok" : "Instagram")}</a>`;
+  $("#molduraVideo").innerHTML = `<iframe src="${esc(url)}" title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>
+    <a class="abrir-fora" href="${esc(link)}" target="_blank" rel="noopener">não carregou? abrir no ${nomeRede(link)}</a>`;
   modalVideo.classList.add("aberto");
   modalVideo.setAttribute("aria-hidden", "false");
   videoAberto = true;
@@ -835,21 +834,27 @@ function fecharVideo() {
 $("#gradeDestaques").addEventListener("click", (e) => {
   const card = e.target.closest("[data-video]");
   if (!card || e.ctrlKey || e.metaKey || e.shiftKey) return;
-  if (abrirVideo(Number(card.dataset.video))) e.preventDefault();
+  const d = destaques[Number(card.dataset.video)];
+  if (abrirVideo(d.link, d.titulo)) e.preventDefault();
+});
+$("#galeria").addEventListener("click", (e) => {
+  const card = e.target.closest("[data-link]");
+  if (!card || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  if (abrirVideo(card.dataset.link, card.dataset.titulo)) e.preventDefault();
 });
 $("#fecharVideo").addEventListener("click", fecharVideo);
 modalVideo.addEventListener("click", (e) => { if (e.target === modalVideo) fecharVideo(); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape" && videoAberto) fecharVideo(); });
 
 /* filtros e galeria */
-$("#filtros").innerHTML = nichos.map((n, i) =>
+$("#filtros").innerHTML = nichos.filter((n) => n.chave === "todos" || trabalhos.some((t) => t.nicho === n.chave)).map((n, i) =>
   `<button class="filtro" type="button" data-nicho="${esc(n.chave)}" aria-pressed="${i === 0}">${esc(n.nome)}</button>`).join("");
 $("#galeria").innerHTML = trabalhos.map((t) => {
   const nomeNicho = (nichos.find((n) => n.chave === t.nicho) || {}).nome || t.nicho;
   const formato = t.formato.includes("1:1") ? "ph-11" : "ph-45";
-  const conteudo = `${bloco(formato, t.cor, t.capa, t.formato, t.titulo + " para " + t.marca)}
+  const conteudo = `<div style="position:relative">${bloco(formato, t.cor, t.capa, t.formato, t.titulo + " para " + t.marca)}${t.link ? '<span class="play" aria-hidden="true"></span>' : ""}</div>
       <h3>${esc(t.titulo)}</h3><p>${esc(t.marca)}</p><span class="etiqueta">#${esc(nomeNicho.toLowerCase())}</span>`;
-  return `<li class="trabalho" data-nicho="${esc(t.nicho)}">${t.link ? `<a href="${esc(t.link)}" target="_blank" rel="noopener" style="text-decoration:none">${conteudo}</a>` : conteudo}</li>`;
+  return `<li class="trabalho" data-nicho="${esc(t.nicho)}">${t.link ? `<a href="${esc(t.link)}" target="_blank" rel="noopener" data-link="${esc(t.link)}" data-titulo="${esc(t.titulo)}" aria-label="Assistir: ${esc(t.titulo)}, ${esc(t.marca)}" style="text-decoration:none;display:block">${conteudo}</a>` : conteudo}</li>`;
 }).join("");
 $("#filtros").addEventListener("click", (e) => {
   const botao = e.target.closest(".filtro");
