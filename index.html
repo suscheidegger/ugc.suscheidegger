@@ -244,6 +244,9 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .play::before{content:"";border-left:22px solid var(--terra);border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:6px}
 .video-card:hover .play{transform:scale(1.1)}
 .plataforma{position:absolute;top:12px;left:12px;background:rgba(251,246,238,.9);color:var(--tinta);padding:.2em .8em;border-radius:999px;font-size:.82rem;font-weight:500}
+.etiquetas{position:absolute;top:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px;z-index:1}
+.etiquetas .plataforma{position:static}
+.selo-views{background:#d62f3c;color:#fff;padding:.25em .85em;border-radius:999px;font-size:.82rem;font-weight:600;box-shadow:0 4px 12px rgba(214,47,60,.35)}
 .video-info{padding:18px 6px 0}
 .numero-forte{font-family:var(--serif);font-size:clamp(2.4rem,4vw,3.1rem);color:var(--terra-escuro);line-height:1}
 .numero-rotulo{font-family:var(--mao);font-size:1.4rem;color:var(--oliva-escuro);display:block;margin-bottom:.5rem}
@@ -437,7 +440,7 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
   </div>
   <div class="container capa-grade">
     <div class="revelar">
-      <span class="rotulo">criadora de conteúdo UGC · São Mateus, ES</span>
+      <span class="rotulo">criadora de conteúdo UGC · 📍 São Mateus, ES</span>
       <h1 id="titulo-capa">Sumani <span class="sobrenome">Scheidegger da Fonseca</span></h1>
       <p class="frase">Conteúdo natural, rotina real e indicação com cara de amiga, é assim que eu faço as marcas chegarem nas pessoas.</p>
       <div class="acoes">
@@ -454,11 +457,6 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
         <div class="foto-viva">
           <img src="fotos/sumani.jpg" alt="Sumani Scheidegger sorrindo para a câmera" width="720" height="900">        </div>
         <figcaption class="legenda-mao">oi, prazer! sou a Su</figcaption>
-        <div class="carimbo" aria-hidden="true">
-          <svg viewBox="0 0 100 100"><defs><path id="circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
-            <text font-family="Outfit, sans-serif" font-size="9.5" letter-spacing="2.4" fill="#94442b"><textPath href="#circ">CONTEÚDO REAL · UGC · CONTEÚDO REAL · UGC ·</textPath></text></svg>
-          <b>feito<br>à mão</b>
-        </div>
       </figure>
     </div>
   </div>
@@ -696,7 +694,7 @@ const marcas = [
    titulo e contexto: placeholders para você trocar. */
 const destaques = [
   { link: "https://youtube.com/shorts/CW-AYMA9fko", capa: "fotos/vichy-destaque.jpg", plataforma: "TikTok",
-    numero: "+5M", rotulo: "views no TikTok", titulo: "Queda capilar após uso de canetas emagrecedoras", contexto: "Vichy", cor: "g1" },
+    numero: "+5M", rotulo: "views no TikTok", titulo: "Queda capilar após uso de canetas emagrecedoras", contexto: "Vichy", cor: "g1", selo: "🔥 +5M visualizações" },
   { link: "https://youtube.com/shorts/_-OLafF-2CY", capa: "fotos/loja-fisica-destaque.jpg", plataforma: "Instagram",
     numero: "+14K", rotulo: "views no Instagram", titulo: "Loja Física", contexto: "Kit promocional", cor: "g2" },
   { link: "https://youtube.com/shorts/FtMIv69A6FY", capa: "fotos/desodorante-destaque.jpg", plataforma: "Instagram",
@@ -723,7 +721,7 @@ const trabalhos = [
   { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-1.jpg", link: "https://youtube.com/shorts/Rgbuq1aSnl4", cor: "g1" },
   { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-2.jpg", link: "https://youtube.com/shorts/DLEdzxQxdeU", cor: "g1" },
   { nicho: "beleza",  titulo: "Higiene pessoal",  marca: "Francis", formato: "vídeo UGC 9:16", capa: "fotos/francis-higiene-3.jpg", link: "https://youtube.com/shorts/Xp0R2R70NHo", cor: "g1" },
-  { nicho: "beleza",  titulo: "Queda capilar após uso de canetas emagrecedoras", marca: "Vichy", detalhe: "Storytelling: emagrecimento com canetas e queda capilar", formato: "vídeo UGC 9:16", capa: "fotos/vichy-queda-1.jpg", link: "https://youtube.com/shorts/CW-AYMA9fko", cor: "g1" },
+  { nicho: "beleza",  titulo: "Queda capilar após uso de canetas emagrecedoras", marca: "Vichy", detalhe: "Storytelling: emagrecimento com canetas e queda capilar", formato: "vídeo UGC 9:16", capa: "fotos/vichy-queda-1.jpg", link: "https://youtube.com/shorts/CW-AYMA9fko", cor: "g1", selo: "🔥 +5M visualizações" },
   { nicho: "beleza",  titulo: "Queda capilar após uso de canetas emagrecedoras", marca: "Vichy", detalhe: "Continuação da história real", formato: "vídeo UGC 9:16", capa: "fotos/vichy-queda-2.jpg", link: "https://youtube.com/shorts/DYN0ALRt8oc", cor: "g1" },
   { nicho: "beleza",  titulo: "Dove", detalhe: "Storytelling, cuidados com o cabelo no verão", formato: "vídeo UGC 9:16", capa: "fotos/dove-storytelling.jpg", link: "https://youtube.com/shorts/G4OEneCsXGQ", cor: "g1" },
   { nicho: "beleza",  titulo: "Dove", detalhe: "Vídeo sensorial", formato: "vídeo UGC 9:16", capa: "fotos/dove-cabelo.jpg", link: "https://youtube.com/shorts/2JlpJbOEZoo", cor: "g1" },
@@ -846,7 +844,7 @@ $("#gradeDestaques").innerHTML = destaques.map((d, i) => `
   <a class="video-card revelar" href="${esc(d.link)}" target="_blank" rel="noopener" data-video="${i}" aria-label="Assistir: ${esc(d.titulo)}, ${esc(d.numero)} ${esc(d.rotulo)}">
     <div style="position:relative">
       ${bloco("ph-916", d.cor, d.capa, "capa do vídeo 9:16", "Capa do conteúdo de destaque " + (i + 1))}
-      <span class="plataforma">${esc(d.plataforma)}</span>
+      <div class="etiquetas"><span class="plataforma">${esc(d.plataforma)}</span>${d.selo ? `<span class="selo-views">${esc(d.selo)}</span>` : ""}</div>
       <span class="play" aria-hidden="true"></span>
     </div>
     <div class="video-info">
@@ -915,7 +913,7 @@ $("#galeria").innerHTML = trabalhos.map((t) => {
   const nomeNicho = (nichos.find((n) => n.chave === t.nicho) || {}).nome || t.nicho;
   const formato = (t.formato || "").includes("1:1") ? "ph-11" : "ph-45";
   t.cor = t.cor || "g1";
-  const conteudo = `<div style="position:relative">${bloco(formato, t.cor, t.capa, t.formato || "vídeo 9:16", "Capa do vídeo: " + [t.titulo, t.marca].filter(Boolean).join(", "))}${t.link ? '<span class="play" aria-hidden="true"></span>' : ""}</div>
+  const conteudo = `<div style="position:relative">${bloco(formato, t.cor, t.capa, t.formato || "vídeo 9:16", "Capa do vídeo: " + [t.titulo, t.marca].filter(Boolean).join(", "))}${t.link ? '<span class="play" aria-hidden="true"></span>' : ""}${t.selo ? `<div class="etiquetas"><span class="selo-views">${esc(t.selo)}</span></div>` : ""}</div>
       <h3>${esc(t.titulo)}</h3><p>${[t.marca, t.detalhe].filter(Boolean).map(esc).join(" · ")}</p><span class="etiqueta">#${esc(nomeNicho.toLowerCase())}</span>`;
   return `<li class="trabalho" data-nicho="${esc(t.nicho)}">${t.link ? `<a href="${esc(t.link)}" target="_blank" rel="noopener" data-link="${esc(t.link)}" data-titulo="${esc(t.titulo)}" aria-label="Assistir: ${esc([t.titulo, t.marca || t.detalhe].filter(Boolean).join(", "))}" style="text-decoration:none;display:block">${conteudo}</a>` : conteudo}</li>`;
 }).join("");
