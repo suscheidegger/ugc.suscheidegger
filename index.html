@@ -189,6 +189,8 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .trilho ul{display:flex;list-style:none;margin:0;padding:0}
 .trilho li{white-space:nowrap;padding:0 28px;font-family:var(--serif);font-size:1.3rem;color:var(--tinta-suave);display:flex;align-items:center;gap:28px}
 .trilho li::after{content:"✦";font-size:.8rem;color:var(--terra)}
+.logo-marca{height:40px;width:auto;max-width:150px;object-fit:contain;opacity:.85;transition:opacity .2s}
+.logo-marca:hover{opacity:1}
 @keyframes rolar{to{transform:translateX(-50%)}}
 .rolagem:hover .trilho{animation-play-state:paused}
 
@@ -628,11 +630,28 @@ const numerosCapa = [
   { valor: "+00M", rotulo: "views somadas (TROCAR)" }
 ];
 
-/* Marcas da faixa fina da capa */
+/* Marcas da faixa fina da capa.
+   logo: caminho da imagem na pasta "logos" (PNG transparente). Deixe "" para mostrar o nome escrito. */
 const marcas = [
-  "Dove", "Seda", "Rexona", "Mercado Livre", "Méliuz", "Trinta", "Neutrogena", "Eudora",
-  "O Boticário", "OMO", "Vichy", "Garnier", "L’Oréal", "Uniasselvi", "Leev", "Befit",
-  "Open English", "Breevo"
+  { nome: "Dove",          logo: "logos/dove.png" },
+  { nome: "Seda",          logo: "logos/seda.png" },
+  { nome: "Rexona",        logo: "logos/rexona.png" },
+  { nome: "Mercado Livre", logo: "logos/mercado-livre.png" },
+  { nome: "Méliuz",        logo: "logos/meliuz.png" },
+  { nome: "Trinta",        logo: "logos/trinta.png" },
+  { nome: "Neutrogena",    logo: "logos/neutrogena.png" },
+  { nome: "Eudora",        logo: "logos/eudora.png" },
+  { nome: "O Boticário",   logo: "logos/o-boticario.png" },
+  { nome: "OMO",           logo: "logos/omo.png" },
+  { nome: "Vichy",         logo: "" },
+  { nome: "Garnier",       logo: "" },
+  { nome: "L’Oréal",       logo: "" },
+  { nome: "Uniasselvi",    logo: "logos/uniasselvi.png" },
+  { nome: "Leev",          logo: "" },
+  { nome: "Befit",         logo: "" },
+  { nome: "Open English",  logo: "logos/open-english.png" },
+  { nome: "Breevo",        logo: "logos/breevo.png" },
+  { nome: "BigBoom",       logo: "logos/bigboom.png" }
 ];
 
 /* Conteúdos de destaque.
@@ -722,11 +741,13 @@ $("#numerosCapa").innerHTML = numerosCapa.map((n) => `<li><strong>${esc(n.valor)
 
 /* faixas que rolam (a lista é duplicada para o movimento ficar contínuo) */
 function preencherTrilho(el, itens) {
-  const lista = `<ul>${itens.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`;
+  const lista = `<ul>${itens.map((i) => `<li>${i}</li>`).join("")}</ul>`;
   el.innerHTML = lista + lista.replace("<ul>", '<ul aria-hidden="true">');
 }
-preencherTrilho($("#trilhoMarcas"), marcas);
-preencherTrilho($("#trilhoServicos"), servicos.map((s) => s.titulo));
+preencherTrilho($("#trilhoMarcas"), marcas.map((m) => m.logo
+  ? `<img class="logo-marca" src="${esc(m.logo)}" alt="${esc(m.nome)}" loading="lazy" onerror="this.replaceWith(document.createTextNode(this.alt))">`
+  : esc(m.nome)));
+preencherTrilho($("#trilhoServicos"), servicos.map((s) => esc(s.titulo)));
 
 /* destaques */
 $("#gradeDestaques").innerHTML = destaques.map((d, i) => `
