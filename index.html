@@ -110,6 +110,16 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
   50%{transform:translateY(-16px) rotate(calc(var(--r,0deg) + 3deg))}
 }
 /* rádio vintage */
+/* câmera fotográfica vintage */
+.camera{width:120px;height:80px;background:var(--terra);border-radius:14px;box-shadow:var(--sombra);--r:-8deg}
+.camera::before{content:"";position:absolute;left:0;right:0;top:16px;height:14px;background:var(--linho);opacity:.9}
+.camera::after{content:"";position:absolute;left:14px;top:-9px;width:30px;height:12px;border-radius:4px 4px 0 0;background:var(--terra-escuro)}
+.camera .flash{position:absolute;right:12px;top:6px;width:16px;height:7px;border-radius:2px;background:#f6ecdc}
+.camera .botao{position:absolute;right:22px;top:-7px;width:14px;height:7px;border-radius:3px 3px 0 0;background:var(--tinta)}
+.camera .lente{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-22px 0 0 -26px;border-radius:50%;
+  background:radial-gradient(circle at 38% 36%,rgba(255,255,255,.55) 0 4px,transparent 5px),
+             radial-gradient(circle,#1f1712 0 12px,#4a3a30 13px 16px,#1f1712 17px 20px,#f6ecdc 21px 24px,transparent 25px);
+  box-shadow:0 0 0 3px var(--terra-escuro)}
 .radio{width:118px;height:78px;background:var(--terra);border-radius:14px;box-shadow:var(--sombra);--r:-8deg}
 .radio::before{content:"";position:absolute;left:12px;top:14px;width:50px;height:50px;border-radius:50%;
   background:repeating-radial-gradient(circle,var(--tinta) 0 2px,#c97a5e 2px 5px)}
@@ -168,6 +178,28 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 }
 .foto-recorte .legenda-mao{display:block;margin-top:12px;line-height:1.2;text-align:center;font-family:var(--mao);font-size:1.45rem;color:var(--tinta-suave)}
 /* fotos reais nos quadros */
+/* ===== LEQUE DE FOTOS DA CAPA ===== */
+.leque{position:relative;width:min(440px,100%);height:min(540px,118vw);cursor:pointer;outline:none}
+.leque::after{content:"";position:absolute;left:12%;right:12%;bottom:8%;height:22px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(58,42,31,.28),transparent 70%);z-index:0;
+  transition:left .7s ease,right .7s ease,height .7s ease}
+.leque img{position:absolute;bottom:9%;height:86%;width:auto;left:50%;
+  filter:drop-shadow(0 10px 18px rgba(58,42,31,.18));
+  -webkit-mask-image:linear-gradient(to bottom,#000 86%,transparent 100%);mask-image:linear-gradient(to bottom,#000 86%,transparent 100%);
+  transition:transform .7s cubic-bezier(.2,.8,.2,1.12);transform-origin:50% 100%}
+.leque .esq{transform:translateX(-78%) rotate(-4deg) scale(.9);z-index:1}
+.leque .dir{transform:translateX(-22%) rotate(4deg) scale(.9);z-index:1}
+.leque .meio{transform:translateX(-50%);z-index:2}
+.leque:hover .esq,.leque.aberto .esq,.leque:focus-visible .esq{transform:translateX(-108%) rotate(-10deg) scale(.88)}
+.leque:hover .dir,.leque.aberto .dir,.leque:focus-visible .dir{transform:translateX(8%) rotate(10deg) scale(.88)}
+.leque:hover .meio,.leque.aberto .meio,.leque:focus-visible .meio{transform:translateX(-50%) translateY(-3%) scale(1.03)}
+.leque:hover::after,.leque.aberto::after,.leque:focus-visible::after{left:-18%;right:-18%;height:34px}
+.leque .legenda-mao{position:absolute;left:0;right:0;bottom:0;margin:0;z-index:3}
+@media (max-width:720px){
+  .leque{width:min(330px,82vw)}
+  .leque:hover .esq,.leque.aberto .esq{transform:translateX(-96%) rotate(-9deg) scale(.82)}
+  .leque:hover .dir,.leque.aberto .dir{transform:translateX(-4%) rotate(9deg) scale(.82)}
+}
 .foto-real,.foto-viva{display:block;width:100%;height:auto;aspect-ratio:4/5;border-radius:4px;object-fit:cover}
 .foto-viva{position:relative;overflow:hidden}
 .foto-viva img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;animation:zoomLento 14s ease-in-out infinite alternate}
@@ -459,7 +491,7 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 <!-- ===== 1. CAPA ===== -->
 <section class="capa" id="capa" aria-labelledby="titulo-capa">
   <div class="objetos" aria-hidden="true">
-    <div class="obj radio" style="top:120px;right:4%;animation-delay:-2s"><i></i></div>
+    <div class="obj camera" style="top:110px;right:4%;animation-delay:-2s"><i class="flash"></i><i class="botao"></i><i class="lente"></i></div>
     <div class="obj cogumelo some-celular" style="bottom:150px;right:40%;animation-delay:-4s"></div>
     <div class="obj planta so-largo" style="bottom:140px;left:1%;animation-delay:-5s"><span class="vaso"></span><span class="folha f1"></span><span class="folha f2"></span><span class="folha f3"></span></div>
   </div>
@@ -483,11 +515,12 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
       </div>
     </div>
     <div class="capa-foto revelar">
-      <figure class="foto-recorte" style="margin:0 auto">
-        <span class="fita" aria-hidden="true"></span>
-        <!-- FOTO PRINCIPAL: para trocar, salve outra foto 4:5 na pasta "fotos" e mude o src abaixo -->
-        <div class="foto-viva">
-          <img src="fotos/sumani.jpg" alt="Sumani Scheidegger sorrindo para a câmera" width="720" height="900">        </div>
+      <!-- LEQUE DE FOTOS: três fotos recortadas (PNG/WEBP sem fundo) na pasta "fotos".
+           Passando o mouse (ou tocando no celular) o leque abre. -->
+      <figure class="leque" tabindex="0" style="margin:0 auto" aria-label="Três fotos da Sumani que se abrem em leque">
+        <img class="esq" src="fotos/leque-treino-site.webp" alt="Sumani treinando crossfit com halteres" width="398" height="680">
+        <img class="dir" src="fotos/leque-moda-site.webp" alt="Sumani de óculos escuros e casaco preto" width="510" height="680">
+        <img class="meio" src="fotos/leque-recovery-site.webp" alt="Sumani segurando o spray Recovery da Phytoca" width="405" height="680">
         <figcaption class="legenda-mao">oi, prazer! sou a Su</figcaption>
       </figure>
     </div>
@@ -1095,6 +1128,10 @@ if (!jaViu) {
   };
   setTimeout(mostrarKit, 7000);
 }
+
+/* leque da capa: no celular um toque abre e fecha */
+const leque = $(".leque");
+if (leque) leque.addEventListener("click", () => leque.classList.toggle("aberto"));
 
 /* ano automático no rodapé */
 $("#ano").textContent = new Date().getFullYear();
