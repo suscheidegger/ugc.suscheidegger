@@ -191,6 +191,7 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .trilho li::after{content:"✦";font-size:.8rem;color:var(--terra)}
 .logo-marca{height:40px;width:auto;max-width:150px;object-fit:contain;opacity:.85;transition:opacity .2s}
 .logo-marca:hover{opacity:1}
+.logo-marca.alto{height:58px}
 @keyframes rolar{to{transform:translateX(-50%)}}
 .rolagem:hover .trilho{animation-play-state:paused}
 
@@ -745,7 +746,7 @@ function preencherTrilho(el, itens) {
   el.innerHTML = lista + lista.replace("<ul>", '<ul aria-hidden="true">');
 }
 preencherTrilho($("#trilhoMarcas"), marcas.map((m) => m.logo
-  ? `<img class="logo-marca" src="${esc(m.logo)}" alt="${esc(m.nome)}" loading="lazy" onerror="this.replaceWith(document.createTextNode(this.alt))">`
+  ? `<img class="logo-marca" src="${esc(m.logo)}" alt="${esc(m.nome)}" loading="lazy" onload="if(this.naturalWidth/this.naturalHeight<1.7)this.classList.add('alto')" onerror="this.replaceWith(document.createTextNode(this.alt))">`
   : esc(m.nome)));
 preencherTrilho($("#trilhoServicos"), servicos.map((s) => esc(s.titulo)));
 
