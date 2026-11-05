@@ -357,7 +357,9 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative}
 .modal .btn{width:100%}
 .modal-video{position:relative;width:min(380px,100%);height:min(760px,calc(100vh - 32px));background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--sombra-forte)}
 .modal-video .fechar{z-index:2;background:rgba(251,246,238,.95);box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.moldura-video,.moldura-video iframe{display:block;width:100%;height:100%;border:0}
+.moldura-video{display:flex;flex-direction:column;width:100%;height:100%}
+.moldura-video iframe{display:block;width:100%;flex:1;border:0}
+.abrir-fora{display:block;text-align:center;padding:10px;font-size:.88rem;color:var(--terra-escuro);background:var(--papel);text-decoration:underline}
 
 /* ===== ANIMAÇÃO DE ENTRADA ===== */
 .js .revelar{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease}
@@ -817,7 +819,8 @@ function abrirVideo(i) {
   const url = enderecoPlayer(destaques[i].link);
   if (!url) return false;
   focoAntesVideo = document.activeElement;
-  $("#molduraVideo").innerHTML = `<iframe src="${esc(url)}" title="${esc(destaques[i].titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`;
+  $("#molduraVideo").innerHTML = `<iframe src="${esc(url)}" title="${esc(destaques[i].titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>
+    <a class="abrir-fora" href="${esc(destaques[i].link)}" target="_blank" rel="noopener">não carregou? abrir no ${esc(destaques[i].plataforma === "TikTok" ? "TikTok" : "Instagram")}</a>`;
   modalVideo.classList.add("aberto");
   modalVideo.setAttribute("aria-hidden", "false");
   videoAberto = true;
